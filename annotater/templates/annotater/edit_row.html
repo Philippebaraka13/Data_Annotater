@@ -1,0 +1,37 @@
+{% extends "annotater/base.html" %}
+{% block content %}
+
+<h2>Edit Record</h2>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <p><strong>Merchant:</strong> {{ obj.merchant }}</p>
+    <p><strong>SKU:</strong> {{ obj.sku }}</p>
+    <p><strong>Country:</strong> {{ obj.country }}</p>
+  </div>
+</div>
+
+<form method="post" class="card p-4">
+  {% csrf_token %}
+
+  <div class="mb-3">
+    <label class="form-label">Retailer</label>
+    {{ form.retailer }}
+  </div>
+
+  <div class="mb-4">
+    <label class="form-label">Segment</label>
+    {{ form.segment }}
+  </div>
+
+  <button type="submit" class="btn btn-success w-100">
+    Save Changes
+  </button>
+
+  <a href="{% url 'annotater:pending_list' %}" class="btn btn-secondary w-100 mt-2">
+    Cancel
+  </a>
+</form>
+
+
+{% endblock %}
