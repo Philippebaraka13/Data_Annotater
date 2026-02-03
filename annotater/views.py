@@ -6,7 +6,7 @@ import csv
 import io
 
 from django.contrib import messages
-from django.db import IntegrityError, transaction
+from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import CSVUploadForm, RetailRowAnnotateForm
