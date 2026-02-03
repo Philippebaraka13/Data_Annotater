@@ -34,8 +34,7 @@ def upload_csv(request):
                     continue
 
                 try:
-                    with transaction.atomic():
-                        RetailRow.objects.create(
+                    RetailRow.objects.create(
                             merchant=merchant,
                             sku=sku,
                             country=country,
