@@ -1,4 +1,3 @@
-
 # Create your views here.
 
 import csv
@@ -23,6 +22,7 @@ def upload_csv(request):
 
             inserted = 0
             skipped = 0
+            skipped_rows = []
 
             for row in reader:
                 merchant = (row.get("merchant") or "").strip()
@@ -34,18 +34,20 @@ def upload_csv(request):
 
                 try:
                     RetailRow.objects.create(
-                            merchant=merchant,
-                            sku=sku,
-                            country=country,
-                        )
+                        merchant=merchant,
+                        sku=sku,
+                        country=country,
+                    )
                     inserted += 1
                 except IntegrityError:
                     skipped += 1
+                    skipped_rows.append(f"{merchant} | {sku} | {country}")
 
-            messages.success(
-                request,
-                f"Upload complete. Inserted {inserted}, skipped {skipped} duplicates."
-            )
+            msg = f"Upload complete. Inserted {inserted}, skipped {skipped} duplicates."
+            if skipped_rows:
+                msg += "\nSkipped rows:\n" + "\n".join(skipped_rows)
+
+            messages.success(request, msg)
             return redirect("annotater:pending_list")
     else:
         form = CSVUploadForm()
