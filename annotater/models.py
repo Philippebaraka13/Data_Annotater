@@ -11,7 +11,7 @@ class RetailRow(models.Model):
     # Raw fields
     merchant = models.TextField()
     sku = models.TextField()
-    country = models.CharField(max_length=2)
+    country = models.CharField(max_length=3)
 
     # Annotation fields
     retailer = models.TextField(blank=True, null=True)
