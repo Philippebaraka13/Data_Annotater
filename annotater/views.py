@@ -66,8 +66,11 @@ def edit_row(request, pk):
     if request.method == "POST":
         form = RetailRowAnnotateForm(request.POST, instance=obj)
         if form.is_valid():
-            form.save()
-            messages.success(request, "Row updated successfully.")
+            if form.has_changed():
+                form.save()
+                messages.success(request, "Row updated successfully.")
+            else:
+                messages.info(request, "No change were made.")
             return redirect("annotater:pending_list")
     else:
         form = RetailRowAnnotateForm(instance=obj)
