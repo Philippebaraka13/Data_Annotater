@@ -5,40 +5,52 @@
 <p class="text-muted">Review and annotate retail records.</p>
 
 <div class="table-responsive">
-<table class="table table-bordered table-hover align-middle">
-  <thead class="table-dark">
-    <tr>
-      <th>Merchant</th>
-      <th>SKU</th>
-      <th>Country</th>
-      <th>Retailer</th>
-      <th>Segment</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for r in rows %}
-    <tr class="{% if r.segment %}table-success{% endif %}">
-      <td>{{ r.merchant }}</td>
-      <td>{{ r.sku }}</td>
-      <td>{{ r.country }}</td>
-      <td>{{ r.retailer|default:"—" }}</td>
-      <td>
-        {% if r.segment %}
-          <span class="badge bg-success">{{ r.segment }}</span>
-        {% else %}
-          <span class="badge bg-warning text-dark">Pending</span>
-        {% endif %}
-      </td>
-      <td>
-        <a href="{% url 'annotater:edit_row' r.id %}" class="btn btn-sm btn-primary">
-          Edit
-        </a>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+  <table class="table table-bordered table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>Merchant</th>
+        <th>SKU</th>
+        <th>Country</th>
+        <th>Retailer</th>
+        <th>Segment</th>
+        <th>Created</th>
+        <th>Updated</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for r in rows %}
+        <tr class="{% if r.segment %}table-success{% endif %}">
+          <td>{{ r.merchant }}</td>
+          <td>{{ r.sku }}</td>
+          <td>{{ r.country }}</td>
+          <td>{{ r.retailer|default:"—" }}</td>
+
+          <td>
+            {% if r.segment %}
+              <span class="badge bg-success">{{ r.segment }}</span>
+            {% else %}
+              <span class="badge bg-warning text-dark">Pending</span>
+            {% endif %}
+          </td>
+
+          <td>{{ r.created_at|date:"Y-m-d H:i" }}</td>
+          <td>{{ r.updated_at|date:"Y-m-d H:i" }}</td>
+
+          <td>
+            <a href="{% url 'annotater:edit_row' r.id %}" class="btn btn-sm btn-primary">
+              Edit
+            </a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="8" class="text-center text-muted">No rows found.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 
 {% endblock %}

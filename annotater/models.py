@@ -1,5 +1,5 @@
 from django.db import models
-
+from datetime import datetime
 # Create your models here.
 
 
@@ -12,6 +12,8 @@ class RetailRow(models.Model):
     merchant = models.TextField()
     sku = models.TextField()
     country = models.CharField(max_length=3)
+    created_at = models.DateTimeField(auto_now_add=True)  
+    updated_at = models.DateTimeField(auto_now=True) 
 
     # Annotation fields
     retailer = models.TextField(blank=True, null=True)
